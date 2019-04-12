@@ -5,7 +5,7 @@
 const https = require('https');
 
 // let define the username
-const username = 'danielevinci';
+const username = 'chalkers';
 
 // Function to print message to console
 function printMessage(username, badgeCount, points) {
