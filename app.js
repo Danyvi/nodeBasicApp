@@ -4,6 +4,10 @@
 // Require https module (To require the https module in our code we need to use the require function)
 const https = require('https');
 
+// Print Error Messages
+function printError(error) {
+  console.error(error.message);
+}
 // Function to print message to console
 function printMessage(username, badgeCount, points) {
   const message = `${username} has ${badgeCount} total badge(s) and ${points} points in JavaScript`;
@@ -41,7 +45,7 @@ function getProfile(username) {
               profile.points.JavaScript
             );
           } catch (error) {
-            console.error(error.message);
+            printError(error);
           }
         });
       }
@@ -52,7 +56,7 @@ function getProfile(username) {
       console.error(`Problem with request ${error.message}`)
     );
   } catch (error) {
-    console.error(error.message);
+    printError(error);
   }
 }
 
