@@ -1,4 +1,5 @@
 const https = require('https');
+const http = require('http');
 
 function printError(error) {
   console.error(error.message);
@@ -14,24 +15,32 @@ function getProfile(username) {
     const request = https.get(
       `https://teamtreehouse.com/${username}.json`,
       response => {
-        let responseBody = '';
+        if (response.statusCode === 200) {
+          let responseBody = '';
 
-        response.on('data', dataChunk => {
-          responseBody += dataChunk.toString();
-        });
+          response.on('data', dataChunk => {
+            responseBody += dataChunk.toString();
+          });
 
-        response.on('end', () => {
-          try {
-            const profile = JSON.parse(responseBody);
-            printMessage(
-              username,
-              profile.badges.length,
-              profile.points.JavaScript
-            );
-          } catch (error) {
-            printError(error);
-          }
-        });
+          response.on('end', () => {
+            try {
+              const profile = JSON.parse(responseBody);
+              printMessage(
+                username,
+                profile.badges.length,
+                profile.points.JavaScript
+              );
+            } catch (error) {
+              printError(error);
+            }
+          });
+        } else {
+          const message = `There was an error getting the profile for ${username} (${
+            http.STATUS_CODES[response.statusCode]
+          })`;
+          const statusCodeError = new Error(message);
+          printError(statusCodeError);
+        }
       }
     );
     request.on('error', error =>
