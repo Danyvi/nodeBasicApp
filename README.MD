@@ -5,5 +5,5 @@
 ## Usage
 
 ```
-node app.js
+node app.js chalkers alenaholligan davemcfarland
 ```
